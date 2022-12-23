@@ -1,3 +1,5 @@
+'use strict';
+
 const todoControl = document.querySelector('.todo-control');
 const headerInput = document.querySelector('.header-input');
 const todoList = document.querySelector('.todo-list');
@@ -8,11 +10,13 @@ const addBtn = document.getElementById('add');
 //создаем обьект который будет хранить каждую тудушку
 let toDoData = [];
 
+toDoData = JSON.parse(localStorage.getItem('toDoData'));
+
 const render = function () {
    todoList.innerHTML = '';
    todoCompleted.innerHTML = '';
 
-   toDoData.forEach(function (item) {
+   toDoData.forEach(function (item, index) {
       const li = document.createElement('li');
 
       li.classList.add('todo-item');
@@ -44,10 +48,6 @@ const render = function () {
 
    //Дела из localStorage подгружаться должны автоматически при загрузки странице
    localStorage.setItem("toDoData", JSON.stringify(toDoData));
-
-   if (localStorage.getItem('toDoData')) {
-      toDoData = JSON.parse(localStorage.getItem('toDoData'));
-   }
 };
 
 //функция в кот будут добавляться новые тудушки по клику на кнопку сабмит
@@ -68,3 +68,5 @@ todoControl.addEventListener('submit', function (event) {
       render();
    }
 });
+
+render();
